@@ -17,7 +17,7 @@ from huggingface_hub.utils import RepositoryNotFoundError, HfHubHTTPError
 import mlflow
 
 mlflow.set_tracking_uri("http://localhost:5000")
-mlflow.set_experiment("mlops-training-experiment")
+mlflow.set_experiment("mlops-training-experiment2")
 
 api = HfApi()
 
@@ -55,12 +55,12 @@ xgb_model = xgb.XGBRegressor(random_state=42, n_jobs=-1)
 
 # Hyperparameter grid
 param_grid = {
-    'xgbregressor__n_estimators': [50, 100, 150],
-    'xgbregressor__max_depth': [3, 5, 7],
-    'xgbregressor__learning_rate': [0.01, 0.05, 0.1],
-    'xgbregressor__subsample': [0.7, 0.8, 1.0],
-    'xgbregressor__colsample_bytree': [0.7, 0.8, 1.0],
-    'xgbregressor__reg_lambda': [0.1, 1, 10]
+    'xgbregressor__n_estimators': [50, 100],
+    'xgbregressor__max_depth': [3, 5],
+    'xgbregressor__learning_rate': [0.01, 0.05],
+    'xgbregressor__subsample': [0.7, 0.8],
+    'xgbregressor__colsample_bytree': [0.7, 0.8],
+    'xgbregressor__reg_lambda': [0.1, 1]
 }
 
 # Pipeline
@@ -90,8 +90,8 @@ with mlflow.start_run():
     y_pred_test = best_model.predict(Xtest)
 
     # Metrics
-    train_rmse = mean_squared_error(ytrain, y_pred_train, squared=False)
-    test_rmse = mean_squared_error(ytest, y_pred_test, squared=False)
+    train_rmse = mean_squared_error(ytrain, y_pred_train)
+    test_rmse = mean_squared_error(ytest, y_pred_test)
 
     train_mae = mean_absolute_error(ytrain, y_pred_train)
     test_mae = mean_absolute_error(ytest, y_pred_test)
