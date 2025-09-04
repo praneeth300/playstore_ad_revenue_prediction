@@ -3,7 +3,7 @@ import pandas as pd
 from huggingface_hub import hf_hub_download
 import joblib
 
-# Download and load the trained model
+# Download and load the trained model.
 model_path = hf_hub_download(repo_id="praneeth232/playstore_revenue_model", filename="best_playstore_revenue_model_v1.joblib")
 model = joblib.load(model_path)
 
